@@ -19,7 +19,7 @@ namespace Help4ILS
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (DataProvider._getDataSQLs(conn_text.Text, "select count(KEY_1) from aaqq") > 0)
+            if (DataProvider._getDataSQLs(conn_text.Text, "SELECT COUNT(KEY_1) FROM AAQQ") > 0)
             {
                 MessageBox.Show("Все OK!");
                 this.getList4ILSTableAdapter.Connection.ConnectionString = conn_text.Text;
@@ -185,13 +185,17 @@ namespace Help4ILS
                 {
                     string key = ws.Cells[i, 15].Value.ToString();
 
-                    DataTable dt = DataProvider._getDataSQL(conn_text.Text, String.Format("SELECT PODRAZD.PODRAZDEL, SLUZBA.NAM_OF_SLU, OFIC_DOL.NAM_OF_DOL FROM AAQQ INNER JOIN PODRAZD ON AAQQ.PODRAZD = PODRAZD.KEY_OF_POD INNER JOIN SLUZBA ON AAQQ.SLUZBA = SLUZBA.KEY_OF_SLU INNER JOIN OFIC_DOL ON AAQQ.REAL_DOLZN = OFIC_DOL.P3 WHERE (AAQQ.KEY_1 ={0})", key));
+                    DataTable dt = DataProvider._getDataSQL(conn_text.Text,
+                            String.Format("SELECT PODRAZD.PODRAZDEL, SLUZBA.NAM_OF_SLU, OFIC_DOL.NAM_OF_DOL FROM AAQQ INNER JOIN PODRAZD ON AAQQ.PODRAZD = PODRAZD.KEY_OF_POD INNER JOIN SLUZBA ON AAQQ.SLUZBA = SLUZBA.KEY_OF_SLU INNER JOIN OFIC_DOL ON AAQQ.REAL_DOLZN = OFIC_DOL.P3 WHERE (AAQQ.KEY_1 ={0})", key));
                     if (dt.Rows.Count < 1)
-                        dt = DataProvider._getDataSQL(conn_text.Text, String.Format("SELECT PODRAZD.PODRAZDEL, SLUZBA.NAM_OF_SLU, OFIC_DOL.NAM_OF_DOL FROM ARCHIVE INNER JOIN PODRAZD ON ARCHIVE.PODRAZD = PODRAZD.KEY_OF_POD INNER JOIN SLUZBA ON ARCHIVE.SLUZBA = SLUZBA.KEY_OF_SLU INNER JOIN OFIC_DOL ON ARCHIVE.REAL_DOLZN = OFIC_DOL.P3 WHERE (ARCHIVE.KEY_1 ={0})", key));
+                        dt = DataProvider._getDataSQL(conn_text.Text,
+                            String.Format("SELECT PODRAZD.PODRAZDEL, SLUZBA.NAM_OF_SLU, OFIC_DOL.NAM_OF_DOL FROM ARCHIVE INNER JOIN PODRAZD ON ARCHIVE.PODRAZD = PODRAZD.KEY_OF_POD INNER JOIN SLUZBA ON ARCHIVE.SLUZBA = SLUZBA.KEY_OF_SLU INNER JOIN OFIC_DOL ON ARCHIVE.REAL_DOLZN = OFIC_DOL.P3 WHERE (ARCHIVE.KEY_1 ={0})", key));
                     if (dt.Rows.Count < 1)
-                        dt = DataProvider._getDataSQL(conn_text.Text, String.Format("SELECT PODRAZD.PODRAZDEL, SLUZBA.NAM_OF_SLU, OFIC_DOL.NAM_OF_DOL FROM RESERV INNER JOIN PODRAZD ON RESERV.PODRAZD = PODRAZD.KEY_OF_POD INNER JOIN SLUZBA ON RESERV.SLUZBA = SLUZBA.KEY_OF_SLU INNER JOIN OFIC_DOL ON RESERV.REAL_DOLZN = OFIC_DOL.P3 WHERE (RESERV.KEY_1 ={0})", key));
+                        dt = DataProvider._getDataSQL(conn_text.Text,
+                            String.Format("SELECT PODRAZD.PODRAZDEL, SLUZBA.NAM_OF_SLU, OFIC_DOL.NAM_OF_DOL FROM RESERV INNER JOIN PODRAZD ON RESERV.PODRAZD = PODRAZD.KEY_OF_POD INNER JOIN SLUZBA ON RESERV.SLUZBA = SLUZBA.KEY_OF_SLU INNER JOIN OFIC_DOL ON RESERV.REAL_DOLZN = OFIC_DOL.P3 WHERE (RESERV.KEY_1 ={0})", key));
                     if (dt.Rows.Count < 1)
-                        dt = DataProvider._getDataSQL(conn_text.Text, String.Format("SELECT PODRAZD.PODRAZDEL, SLUZBA.NAM_OF_SLU, OFIC_DOL.NAM_OF_DOL FROM VYEZD INNER JOIN PODRAZD ON VYEZD.PODRAZD = PODRAZD.KEY_OF_POD INNER JOIN SLUZBA ON VYEZD.SLUZBA = SLUZBA.KEY_OF_SLU INNER JOIN OFIC_DOL ON VYEZD.REAL_DOLZN = OFIC_DOL.P3 WHERE (VYEZD.KEY_1 ={0})", key));
+                        dt = DataProvider._getDataSQL(conn_text.Text,
+                            String.Format("SELECT PODRAZD.PODRAZDEL, SLUZBA.NAM_OF_SLU, OFIC_DOL.NAM_OF_DOL FROM VYEZD INNER JOIN PODRAZD ON VYEZD.PODRAZD = PODRAZD.KEY_OF_POD INNER JOIN SLUZBA ON VYEZD.SLUZBA = SLUZBA.KEY_OF_SLU INNER JOIN OFIC_DOL ON VYEZD.REAL_DOLZN = OFIC_DOL.P3 WHERE (VYEZD.KEY_1 ={0})", key));
 
                     ws.Cells[i, 5] = dt.Rows[0]["PODRAZDEL"].ToString();
                     ws.Cells[i, 6] = dt.Rows[0]["NAM_OF_SLU"].ToString();
@@ -211,6 +215,6 @@ namespace Help4ILS
                 excelApp.Visible = true;
             }
         }
-    }
+	}
 }
 
